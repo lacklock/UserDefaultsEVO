@@ -13,6 +13,10 @@ extension UserDefaults {
     enum TestData: String,UserDefaultSettable {
         case name
         case url
+        case bool
+        case int
+        case float
+        case double
     }
 }
 
@@ -49,5 +53,48 @@ class UserDefaultsEVOTests: XCTestCase {
         UserDefaults.TestData.url.removed()
         assert(storeValue.absoluteString == value.absoluteString)
     }
+    
+    func testBool() {
+        let value = true
+        if UserDefaults.TestData.bool.storedBool {
+            assertionFailure("should be nil")
+        }
+        UserDefaults.TestData.bool.store(value: value)
+        let storeValue = UserDefaults.TestData.bool.storedBool
+        UserDefaults.TestData.bool.removed()
+        assert(storeValue)
+    }
 
+    func testInt() {
+        let value = 28
+        if UserDefaults.TestData.int.storedInt != 0 {
+            assertionFailure("should be nil")
+        }
+        UserDefaults.TestData.int.store(value: value)
+        let storeValue = UserDefaults.TestData.int.storedInt
+        UserDefaults.TestData.int.removed()
+        assert(storeValue == value)
+    }
+    
+    func testFloat() {
+        let value: Float = 28.1
+        if UserDefaults.TestData.float.storedInt != 0 {
+            assertionFailure("should be nil")
+        }
+        UserDefaults.TestData.float.store(value: value)
+        let storeValue = UserDefaults.TestData.float.storedFloat
+        UserDefaults.TestData.float.removed()
+        assert(storeValue == value)
+    }
+    
+    func testDouble() {
+        let value: Double = 28.2
+        if UserDefaults.TestData.double.storedDouble != 0 {
+            assertionFailure("should be nil")
+        }
+        UserDefaults.TestData.double.store(value: value)
+        let storeValue = UserDefaults.TestData.double.storedDouble
+        UserDefaults.TestData.double.removed()
+        assert(storeValue == value)
+    }
 }
